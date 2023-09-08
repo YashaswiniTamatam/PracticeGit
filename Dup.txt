@@ -1,0 +1,80 @@
+
+import React from 'react';
+
+const ImageBox = ({ items }) => {
+  return (
+    <div className="image-box">
+      {items.map((item, index) => (
+        <div key={index} className="item">
+          {item.mediaType === 'image' ? (
+            <img src={item.img} alt={item.title} />
+          ) : (
+            <video src={item.videoUrl} controls />
+          )}
+          <p>{item.title}</p>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default ImageBox;
+
+
+Next, create a component that contains two boxes - one for the left column and one for the right column:
+
+
+import React from 'react';
+import ImageBox from './ImageBox';
+
+const TwoColumnLayout = ({ firstItemWidth, lastItemWidth, leftItems, rightItems }) => {
+  const leftColumnStyle = { width: `${firstItemWidth * 100}%` };
+  const rightColumnStyle = { width: `${lastItemWidth * 100}%` };
+
+  return (
+    <div className="two-column-layout">
+      <div className="left-column" style={leftColumnStyle}>
+        <ImageBox items={leftItems} />
+      </div>
+      <div className="right-column" style={rightColumnStyle}>
+        <ImageBox items={rightItems} />
+      </div>
+    </div>
+  );
+};
+
+export default TwoColumnLayout;
+
+
+import React from 'react';
+import TwoColumnLayout from './TwoColumnLayout';
+
+const YourComponent = () => {
+  const data = {
+    "firstItemWidth": 0.8,
+    "lastItemWidth": 0.2,
+    "itemsData": [
+      // ... your data here
+    ]
+  };
+
+  return (
+    <div>
+      <TwoColumnLayout
+        firstItemWidth={data.firstItemWidth}
+        lastItemWidth={data.lastItemWidth}
+        leftItems={data.itemsData[0].items}
+        rightItems={data.itemsData[1].items}
+      />
+    </div>
+  );
+};
+
+export default YourComponent;
+Make sure you have the necessary CSS styling to arrange the images and boxes as you desire. This code will render three images in one box and three in another box, following the provided firstItemWidth and lastItemWidth props. If the mediaType of an item is "video," it will render a video player instead of an image.
+
+
+
+
+
+
